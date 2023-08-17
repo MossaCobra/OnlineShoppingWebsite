@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+  <h1 class="header-title">Shopping Cart</h1>
+  <div class="table-scroll">
+    <div class="table-responsive">
+      <table class="table cart-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart_items %}
+          <tr>
+            <td>{{ item.product.name }}</td>
+            <td>${{ item.product.price|floatformat:2 }}</td>
+            <td>
+              <form method="post" action="{% url 'products:update_cart' pk=item.product.pk %}">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                <button type="submit">Update</button>
+              </form>
+            </td>
+            <td>${{ item.product.price|multiply:item.quantity|floatformat:2 }}</td>
+            <td>
+              <a href="{% url 'products:remove_from_cart' pk=item.product.pk %}">Remove</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr>
+  <p class="text-end total-price">
+    Total Price: <span class="price font-weight-bold">${{ total_price|floatformat:2 }}</span>
+  </p>
+  <div class="text-end">
+    <a href="{% url 'products:index' %}" class="btn btn-secondary">Continue Shopping</a>
+    <a href="{% url 'products:checkout' %}" class="btn btn-primary">Proceed to Checkout</a>
+  </div>
+{% endblock %}
