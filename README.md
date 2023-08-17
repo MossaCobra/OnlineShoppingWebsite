@@ -41,3 +41,5 @@ Before you begin, make sure you have the following software installed:
 Sensitive information such as API keys and secret keys has been removed from the `settings.py` file for security purposes. Make sure to reconfigure these settings when deploying the application.
 
 Experience the convenience of Online Shopping for all your grocery needs. Happy shopping!
+
+Unfortunately, I had to take the previous repo down and reupload it as I mistakenly uploaded the settings.py -(Sensitive Info). 
